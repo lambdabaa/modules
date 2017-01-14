@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+require_relative '../lib/requirerb'
+
+def main
+  options = {}
+  parser = OptionParser.new do |opts|
+    opts.banner = 'Usage requirerb run [options]'
+    opts.separator ''
+    opts.on('-d', '--debug', 'Print debug information to stdout') do |debug|
+      options['debug'] = debug
+    end
+  end
+
+  parser.parse!
+  RequireRb.main(ARGV[0], ARGV[1..-1], options)
+end
+
+if __FILE__ == $0
+  main()
+end
