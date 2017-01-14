@@ -1,4 +1,4 @@
-### definerb
+### requirerb
 
 A proof-of-concept Ruby module loader inspired by the semantics of
 the [amd api](https://github.com/amdjs/amdjs-api/wiki/AMD)!
