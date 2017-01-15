@@ -6,7 +6,7 @@ the [amd api](https://github.com/amdjs/amdjs-api/wiki/AMD)!
 
 [![Build Status](https://travis-ci.org/lambdabaa/requirerb.png?branch=master)](https://travis-ci.org/lambdabaa/requirerb)
 
-### Why
+### Motivation
 
 One of Ruby's greatest weaknesses is that it lacks a good mechanism
 for named imports and exports. When you `require` a ruby file, its
@@ -17,6 +17,14 @@ the loaded module object. Many prefer the explicit and isolated aspects
 of js modules. This experiment strives to demonstrate a cleaner modules
 abstraction for Ruby that maintains some interoperability with existing
 practices in the Ruby standard library and community packages.
+
+### Command-line usage
+
+```
+bundle install requirerb
+# main.rb will be able to import local modules that use define as well as other ruby packages
+requirerb run <path/to/main.rb>
+```
 
 ### API
 
