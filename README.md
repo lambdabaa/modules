@@ -55,7 +55,7 @@ import('test/unit/assertions') =>
 }
 ```
 
-### Example (alpha syntax)
+### Example
 
 ```rb
 ### foo.rb
