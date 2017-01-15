@@ -22,9 +22,11 @@ practices in the Ruby standard library and community packages.
 
 ```
 bundle install requirerb
-# main.rb will be able to import local modules that use define as well as other ruby packages
 requirerb run <path/to/main.rb>
 ```
+
+In the example above, `main.rb` will be able to import local modules that use
+`define` as well as other ruby libraries.
 
 ### API
 
