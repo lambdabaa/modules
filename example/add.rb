@@ -1,3 +1,3 @@
-$define.call do |import|
+define do
   lambda {|a, b, n| (a + b) % n}
 end

@@ -5,33 +5,27 @@ module RequireRb
   # (Hash) map from module identifier to resolved module
   @cache = {}
 
+  # (String) most recent directory that import was invoked on
+  @dirname = '/'
+
+  # (String) most recent path that import was invoked on
+  @path = '/'
+
   def self.internal_import(dirname, basename)
     path = File.join @basepath, dirname, basename
-
-    $import = ->(name) {
-      if name[0] == '.'
-        # Treat as local module.
-        child_path = File.join dirname, name[1..-1]
-        child_dirname = File.dirname child_path
-        child_basename = File.basename child_path
-        internal_import child_dirname, child_basename
-      else
-        # Treat as external ruby import.
-        external_import name
-      end
-    }
-
-    $define = ->(&blk) {
-      @cache[path] = blk.call($import)
-    }
-
-    if @cache.include? path
+    if @cache.include? @path
       puts "Already cached local module #{path}"
       return @cache[path]
     end
 
     puts "Loading local module #{path}"
-    require path
+    prev_dirname = @dirname
+    prev_path = @path
+    @dirname = dirname
+    @path = path
+    require @path
+    @dirname = prev_dirname
+    @path = prev_path
     return @cache[path]
   end
 
@@ -93,5 +87,27 @@ module RequireRb
     else
       raise "Invalid command #{cmd}"
     end
+  end
+end
+
+class Object
+  def import(name)
+      if name[0] == '.'
+        # Treat as local module.
+        dirname = RequireRb.instance_variable_get :@dirname
+        child_path = File.join dirname, name[1..-1]
+        child_dirname = File.dirname child_path
+        child_basename = File.basename child_path
+        RequireRb.internal_import child_dirname, child_basename
+      else
+        # Treat as external ruby import.
+        RequireRb.external_import name
+      end
+  end
+
+  def define
+    cache = RequireRb.instance_variable_get :@cache
+    path = RequireRb.instance_variable_get :@path
+    cache[path] = yield
   end
 end

@@ -1,7 +1,9 @@
 # load local modules defined with an amd-inspired syntax
-modular = $import.call('./modular')
+modular = import('./modular')
 # compatible with external globals-style ruby modules
-assert = $import.call('test/unit/assertions')['Test::Unit::Assertions']
+assert = import('test/unit/assertions')['Test::Unit::Assertions']
+
+p modular
 
 assert.assert_equal(modular[:add].call(2, 3, 2), 1)
 puts "PASS"

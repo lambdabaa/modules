@@ -1,4 +1,4 @@
-$define.call do |import|
+define do
   def reverse(str, result='')
     if str.length == 0
       result

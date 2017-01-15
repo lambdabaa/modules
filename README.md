@@ -22,14 +22,14 @@ practices in the Ruby standard library and community packages.
 
 ```rb
 ### foo.rb
-$define.call do |import|
-  # The value you return from the $define block is what gets exported
+define do
+  # The value you return from the define block is what gets exported
   # from the module.
   'foo'
 end
 
 ### foo_wrapper.rb
-$define.call do |import|
+define do
   # Load the 'foo' constant from foo.rb
   foo = import './foo'
 
@@ -40,9 +40,9 @@ end
 
 ### test.rb
 # load local modules defined with an amd-inspired syntax
-foo = $import.call('./foo_wrapper')
+foo = import './foo_wrapper'
 # compatible with external globals-style ruby modules
-assert = $import.call('test/unit/assertions')['Test::Unit::Assertions']
+assert = import('test/unit/assertions')['Test::Unit::Assertions']
 
 assert.assert_equal(foo.foo(), 'foo')
 # No global namespace pollution \o/

@@ -1,6 +1,6 @@
-$define.call do |import|
-  add = import.call './add'
-  multiply = import.call './multiply'
+define do
+  add = import './add'
+  multiply = import './multiply'
 
   {
     add: add,
