@@ -18,9 +18,10 @@ GEM
 
 PLATFORMS
   java
+  ruby
 
 DEPENDENCIES
   rspec (= 3.5.0)
 
 BUNDLED WITH
-   1.11.2
+   1.13.7

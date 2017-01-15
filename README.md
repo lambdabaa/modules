@@ -24,18 +24,30 @@ practices in the Ruby standard library and community packages.
 ### foo.rb
 
 $define.call do |import|
-  def foo
-    'foo'
+  'foo'
+end
+
+### foo_wrapper.rb
+
+$define.call do |import|
+  # Load the 'foo' constant from foo.rb
+  foo = import './foo'
+
+  def wrapper
+    foo
   end
 end
 
 ### test.rb
 
 # load local modules defined with an amd-inspired syntax
-foo = $import.call('./foo')
+foo = $import.call('./foo_wrapper')
 
 # compatible with external globals-style ruby modules
 assert = $import.call('test/unit/assertions')['Test::Unit::Assertions']
 
 assert.assert_equal(foo.foo(), 'foo')
+
+# No global namespace pollution \o/
+assert.assert_equal(defined? Test, nil)
 ```

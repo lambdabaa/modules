@@ -8,13 +8,7 @@ module RequireRb
   def self.internal_import(dirname, basename)
     path = File.join @basepath, dirname, basename
 
-    if @cache.include? path
-      puts "Already cached local module #{path}"
-      return @cache[path]
-    end
-
-    puts "Loading local module #{path}"
-    $import = lambda do |name|
+    $import = ->(name) {
       if name[0] == '.'
         # Treat as local module.
         child_path = File.join dirname, name[1..-1]
@@ -25,13 +19,18 @@ module RequireRb
         # Treat as external ruby import.
         external_import name
       end
+    }
+
+    $define = ->(&blk) {
+      @cache[path] = blk.call($import)
+    }
+
+    if @cache.include? path
+      puts "Already cached local module #{path}"
+      return @cache[path]
     end
 
-    $define = lambda do |&blk|
-      resolved = blk.call($import)
-      @cache[path] = resolved
-    end
-
+    puts "Loading local module #{path}"
     require path
     return @cache[path]
   end
@@ -54,19 +53,23 @@ module RequireRb
     snapshot = Module.constants
     require name
     defined = Module.constants - snapshot
+    plucked = []
     resolved = {}
     while defined.length > 0
-      todo = defined.pop.to_s
-      const = eval todo
+      todo = defined.pop
+      plucked.push(todo)
+      str = todo.to_s
+      const = eval str
       next if const.nil?
-      resolved[todo] = const.class == Module ? Class.new.extend(const) : const
+      resolved[str] = const.class == Module ? Class.new.extend(const) : const
       if const.respond_to? :constants
-        defined += const.constants.map {|child| "#{todo}::#{child.to_s}"}
+        defined += const.constants.map {|child| "#{str}::#{child.to_s}"}
       end
     end
 
     puts "Found #{resolved}"
     @cache[name] = resolved
+    plucked.each {|item| Object.send(:remove_const, item)}
     return resolved
   end
 
