@@ -80,7 +80,7 @@ foo = import './foo_wrapper'
 # compatible with external globals-style ruby modules
 assert = import('test/unit/assertions')['Test::Unit::Assertions']
 
-assert.assert_equal(foo.foo(), 'foo')
+assert.assert_equal(foo(), 'foo')
 # No global namespace pollution \o/
 assert.assert_equal(defined? Test, nil)
 ```
