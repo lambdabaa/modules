@@ -57,7 +57,7 @@ module RequireRb
     resolved = {}
     while defined.length > 0
       todo = defined.pop
-      plucked.push(todo)
+      plucked.push todo
       str = todo.to_s
       const = eval str
       next if const.nil?
@@ -69,7 +69,9 @@ module RequireRb
 
     puts "Found #{resolved}"
     @cache[name] = resolved
-    plucked.each {|item| Object.send(:remove_const, item)}
+    plucked
+      .select {|item| item.class == Symbol}
+      .each {|item| Object.send(:remove_const, item)}
     return resolved
   end
 

@@ -3,3 +3,4 @@ rvm:
   - 2.2
 script:
   - bundle exec rspec --color --pattern test/**/*_test.rb
+  - ./bin/requirerb run example/main.rb
