@@ -23,6 +23,8 @@ practices in the Ruby standard library and community packages.
 ```rb
 ### foo.rb
 $define.call do |import|
+  # The value you return from the $define block is what gets exported
+  # from the module.
   'foo'
 end
 
