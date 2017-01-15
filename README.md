@@ -35,7 +35,14 @@ as the `id` parameter and `import` will return a `Hash` containing all constants
 declared. For instance
 
 ```
-import('test/unit/assertions') => {"Test"=>#<Class:0x00000001d08f58>, "Test::Unit"=>#<Class:0x00000001ab38c0>, "Test::Unit::Assertions"=>#<Class:0x00000001ab29e8>, ...}
+import('test/unit/assertions') => 
+
+{
+  "Test"=>#<Class:0x00000001d08f58>,
+  "Test::Unit"=>#<Class:0x00000001ab38c0>,
+  "Test::Unit::Assertions"=>#<Class:0x00000001ab29e8>,
+  ...
+}
 ```
 
 ### Example (alpha syntax)
