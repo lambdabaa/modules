@@ -1,4 +1,4 @@
-define do
+export do
   add = import './add'
   multiply = import './multiply'
 

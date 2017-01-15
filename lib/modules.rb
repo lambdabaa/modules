@@ -1,4 +1,4 @@
-module RequireRb
+module Modules
   # (String) root path for module resolution
   @basepath = '/'
 
@@ -91,23 +91,23 @@ module RequireRb
 end
 
 class Object
+  def export
+    cache = Modules.instance_variable_get :@cache
+    path = Modules.instance_variable_get :@path
+    cache[path] = yield
+  end
+
   def import(name)
       if name[0] == '.'
         # Treat as local module.
-        dirname = RequireRb.instance_variable_get :@dirname
+        dirname = Modules.instance_variable_get :@dirname
         child_path = File.join dirname, name[1..-1]
         child_dirname = File.dirname child_path
         child_basename = File.basename child_path
-        RequireRb.internal_import child_dirname, child_basename
+        Modules.internal_import child_dirname, child_basename
       else
         # Treat as external ruby import.
-        RequireRb.external_import name
+        Modules.external_import name
       end
-  end
-
-  def define
-    cache = RequireRb.instance_variable_get :@cache
-    path = RequireRb.instance_variable_get :@path
-    cache[path] = yield
   end
 end

@@ -1,15 +1,15 @@
-require_relative '../lib/requirerb'
+require_relative '../lib/modules'
 
-RSpec.describe RequireRb do
+RSpec.describe Modules do
   it "#internal_import" do
     dirname = File.dirname(__FILE__) + '/fixtures'
-    reverse = RequireRb.internal_import(dirname, 'reverse')
+    reverse = Modules.internal_import(dirname, 'reverse')
     expect(reverse('123')).to eq '321'
   end
 
   context "#external_import" do
     before(:example) do
-      @base64 = RequireRb.external_import('base64')['Base64']
+      @base64 = Modules.external_import('base64')['Base64']
     end
 
     it "core lib" do

@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-require_relative '../lib/requirerb'
+require_relative '../lib/modules'
 
 def main
   options = {}
@@ -15,7 +15,7 @@ def main
   end
 
   parser.parse!
-  RequireRb.main(ARGV[0], ARGV[1..-1], options)
+  Modules.main(ARGV[0], ARGV[1..-1], options)
 end
 
 main()

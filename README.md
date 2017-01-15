@@ -1,9 +1,9 @@
-requirerb
-=========
+modules
+=======
 
-A Ruby module loader inspired by the semantics of the [amd api](https://github.com/amdjs/amdjs-api/wiki/AMD)!
+A Ruby module loader inspired by the semantics of js modules.
 
-[![Build Status](https://travis-ci.org/lambdabaa/requirerb.png?branch=master)](https://travis-ci.org/lambdabaa/requirerb)
+[![Build Status](https://travis-ci.org/lambdabaa/modules.png?branch=master)](https://travis-ci.org/lambdabaa/modules)
 
 ### Motivation
 
@@ -20,24 +20,24 @@ practices in the Ruby standard library and community packages.
 ### Command-line usage
 
 ```
-bundle install requirerb
-requirerb run <path/to/main.rb>
+bundle install modules
+modules run <path/to/main.rb>
 ```
 
 In the example above, `main.rb` will be able to import local modules that use
-`define` as well as other ruby libraries.
+`export` as well as other ruby libraries.
 
 ### API
 
-#### define(&blk)
+#### export(&blk)
 
 Declare a module (one per file) that other modules can load by calling `import`
-with a relative filepath. `define` takes a single block parameter whose return
+with a relative filepath. `export` takes a single block parameter whose return
 value is what gets exported from the module.
 
 #### import(id)
 
-Load another module. `import` works with local modules declared with `define` as
+Load another module. `import` works with local modules declared with `export` as
 well as other Ruby libraries that declare constants like classes and modules. In
 the latter case when loading external libraries, you need to provide the module name
 as the `id` parameter and `import` will return a `Hash` containing all constants
@@ -58,14 +58,14 @@ import('test/unit/assertions') =>
 
 ```rb
 ### foo.rb
-define do
-  # The value you return from the define block is what gets exported
+export do
+  # The value you return from the export block is what gets exported
   # from the module.
   'foo'
 end
 
 ### foo_wrapper.rb
-define do
+export do
   # Load the 'foo' constant from foo.rb
   foo = import './foo'
 

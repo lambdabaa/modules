@@ -1,4 +1,4 @@
-define do
+export do
   def reverse(str, result='')
     if str.length == 0
       result
