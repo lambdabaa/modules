@@ -1,8 +1,7 @@
 requirerb
 =========
 
-A proof-of-concept Ruby module loader inspired by the semantics of
-the [amd api](https://github.com/amdjs/amdjs-api/wiki/AMD)!
+A Ruby module loader inspired by the semantics of the [amd api](https://github.com/amdjs/amdjs-api/wiki/AMD)!
 
 [![Build Status](https://travis-ci.org/lambdabaa/requirerb.png?branch=master)](https://travis-ci.org/lambdabaa/requirerb)
 
