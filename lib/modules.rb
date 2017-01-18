@@ -35,18 +35,11 @@ module Modules
       return @cache[name]
     end
 
-    sym = name.to_sym
-    if Module.constants.include? sym
-      puts "Already loaded external module #{name}"
-      resolved = eval name
-      @cache[name] = resolved
-      return resolved
-    end
-
     puts "Loading external module #{name}"
     snapshot = Module.constants
     require name
     defined = Module.constants - snapshot
+    p defined
     plucked = []
     resolved = {}
     while defined.length > 0
@@ -57,7 +50,16 @@ module Modules
       next if const.nil?
       resolved[str] = const.class == Module ? Class.new.extend(const) : const
       if const.respond_to? :constants
-        defined += const.constants.map {|child| "#{str}::#{child.to_s}"}
+        children = const
+          .constants
+          .map {|child| "#{str}::#{child.to_s}"}
+          .select {|id|
+            parts = id.split '::'
+            groups = parts.group_by {|x| x}
+            groups.values.all? {|group| group.length < 3}
+          }
+
+        defined += children
       end
     end
 
