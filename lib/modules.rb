@@ -39,7 +39,6 @@ module Modules
     snapshot = Module.constants
     require name
     defined = Module.constants - snapshot
-    p defined
     plucked = []
     resolved = {}
     while defined.length > 0
