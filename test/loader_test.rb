@@ -1,15 +1,19 @@
-require_relative '../lib/modules'
+require_relative '../lib/global'
+require_relative '../lib/loader'
 
-RSpec.describe Modules do
+RSpec.describe Loader do
+  before(:each) do
+    Loader.set_basepath(File.dirname(__FILE__) + '/fixtures')
+  end
+
   it "#internal_import" do
-    dirname = File.dirname(__FILE__) + '/fixtures'
-    reverse = Modules.internal_import(dirname, 'reverse')
+    reverse = Loader.internal_import('reverse')
     expect(reverse('123')).to eq '321'
   end
 
   context "#external_import" do
     before(:example) do
-      @base64 = Modules.external_import('base64')['Base64']
+      @base64 = Loader.external_import('base64')['Base64']
     end
 
     it "core lib" do

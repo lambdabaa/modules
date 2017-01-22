@@ -2,6 +2,7 @@
 
 require 'optparse'
 
+require_relative '../lib/global'
 require_relative '../lib/modules'
 
 def main
