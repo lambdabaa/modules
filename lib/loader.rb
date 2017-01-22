@@ -16,7 +16,7 @@ module Loader
 
   def self.import(id, type=nil)
     chr = id[0]
-    if type == 'interop' || !['/', '.'].include?(chr)
+    if type == 'interop' || (type != 'internal' && !['/', '.'].include?(chr))
       return Interop.import(id)
     end
 
@@ -36,6 +36,7 @@ module Loader
   end
 
   def self.set_basepath(basepath)
+    puts "Set basepath to #{basepath}"
     @basepath = basepath
   end
 end
