@@ -65,13 +65,12 @@ export do
 end
 
 ### foo_wrapper.rb
-export do
-  # Load the 'foo' constant from foo.rb
-  foo = import './foo'
+# Load the 'foo' constant from foo.rb
+foo = import './foo'
 
-  def wrapper
-    foo
-  end
+export do
+  wrapper = lambda { foo }
+  wrapper
 end
 
 ### test.rb
@@ -80,7 +79,7 @@ foo = import './foo_wrapper'
 # compatible with external globals-style ruby modules
 assert = import('test/unit/assertions')['Test::Unit::Assertions']
 
-assert.assert_equal(foo(), 'foo')
+assert.assert_equal(foo.call(), 'foo')
 # No global namespace pollution \o/
 assert.assert_equal(defined? Test, nil)
 ```

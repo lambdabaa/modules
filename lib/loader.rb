@@ -29,7 +29,11 @@ module Loader
     end
 
     @path = File.expand_path(raw)
-    require @path
+    if !@cache.include?(@path)
+      id = @path.end_with?('.rb') ? @path : "#{@path}.rb"
+      Kernel.load(id, true)
+    end
+
     result = @cache[@path]
     @path = prev
     result
