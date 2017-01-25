@@ -8,7 +8,7 @@ require_relative '../lib/modules'
 def main
   options = {}
   parser = OptionParser.new do |opts|
-    opts.banner = 'Usage requirerb run [options]'
+    opts.banner = 'Usage: modules run [options]'
     opts.separator ''
     opts.on('-d', '--debug', 'Print debug information to stdout') do |debug|
       options['debug'] = debug
