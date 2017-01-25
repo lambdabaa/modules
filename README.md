@@ -83,3 +83,11 @@ assert.assert_equal(foo.call(), 'foo')
 # No global namespace pollution \o/
 assert.assert_equal(defined? Test, nil)
 ```
+
+### Wat?
+
+I'm glad you asked! Under the hood we load code into the modules cache
+using [Kernel#load](https://ruby-doc.org/core-2.4.0/Kernel.html#method-i-load)
+with `wrap=true`. The interop layer's implementation is currently a bit sketchy
+and relies on comparing snapshots of `Module.constants` before and after issuing
+a `require` for a core lib or external package.
