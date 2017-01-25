@@ -8,6 +8,6 @@ RSpec.describe Loader do
 
   it "#import" do
     reverse = Loader.import('./reverse')
-    expect(reverse('123')).to eq '321'
+    expect(reverse.call('123')).to eq '321'
   end
 end
