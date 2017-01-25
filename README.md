@@ -13,7 +13,7 @@ for named imports and exports. When you `require` a ruby file, its
 declarations (classes, modules, etc) get evaluated into your scope.
 In contrast, the node.js commonjs module system allows developers
 to explicitly declare module exports that consumers can access on
-the loaded module object. Many prefer the explicit and isolated aspects
+the loaded module container. Many prefer the explicit and isolated aspects
 of js modules. This experiment strives to demonstrate a cleaner modules
 abstraction for Ruby that maintains some interoperability with existing
 practices in the Ruby standard library and community packages.
