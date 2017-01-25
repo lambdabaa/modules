@@ -10,8 +10,14 @@ def main
   parser = OptionParser.new do |opts|
     opts.banner = 'Usage: modules run [options]'
     opts.separator ''
+
     opts.on('-d', '--debug', 'Print debug information to stdout') do |debug|
       options['debug'] = debug
+    end
+
+    opts.on('-v', '--version') do
+      puts '0.1.1'
+      exit
     end
   end
 
