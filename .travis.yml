@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
+  - jruby-19mode
 script:
   - bundle exec rspec --color --pattern test/**/*_test.rb
   - ./bin/modules run example/main.rb
