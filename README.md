@@ -69,8 +69,7 @@ end
 foo = import './foo'
 
 export do
-  wrapper = lambda { foo }
-  wrapper
+  lambda { foo }
 end
 
 ### test.rb
