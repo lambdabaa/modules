@@ -1,6 +1,9 @@
+require_relative './debug'
 require_relative './interop'
 
 module Loader
+  DEBUG = Debug.debug(File.basename(__FILE__))
+
   # (String) root path for module resolution
   @basepath = '/'
 
@@ -40,7 +43,7 @@ module Loader
   end
 
   def self.set_basepath(basepath)
-    puts "Set basepath to #{basepath}"
+    DEBUG.call "Set basepath to #{basepath}"
     @basepath = basepath
   end
 end

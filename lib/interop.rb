@@ -1,20 +1,25 @@
+require_relative './debug'
+
 module Interop
+  DEBUG = Debug.debug(File.basename(__FILE__))
+
+  # (Hash) map from module identifier to resolved module
   @cache = {}
 
   def self.import(id)
     if @cache.include?(id)
-      puts "Cache hit #{id}"
+      DEBUG.call "Cache hit #{id}"
       return @cache[id]
     end
 
-    puts "Load #{id}"
+    DEBUG.call "Load #{id}"
     snapshot = Module.constants
     require id
     cleanly_load(Module.constants - snapshot)
   end
 
   def self.cleanly_load(targets)
-    puts "Package definitions #{targets}"
+    DEBUG.call "Package definitions #{targets}"
     result = wrap_constants(targets)
     result.each_pair do |key, value|
       Object.send(:remove_const, key.to_sym) unless key.include?('::')
