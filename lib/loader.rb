@@ -14,7 +14,12 @@ module Loader
   @path = nil
 
   def self.export(value)
-    @cache[@path] = value
+    if @cache.include?(@path) && value.class == Hash
+      # Special handling to enable multiple exports
+      @cache[@path] = @cache[@path].merge(value)
+    else
+      @cache[@path] = value
+    end
   end
 
   def self.import(id, type=nil)

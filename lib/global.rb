@@ -1,8 +1,13 @@
 require_relative './loader'
 
 class Object
-  def export
-    value = yield
+  def export(name=nil, value=nil)
+    if name.nil?
+      value = yield
+    else
+      value = {name => value}
+    end
+
     Loader.export(value)
   end
 
