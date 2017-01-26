@@ -27,7 +27,7 @@ practices in the Ruby standard library and community packages.
 ```rb
 require 'modules'
 
-# Now import and export are globally throughout your program.
+# Now import and export are available globally throughout your program.
 two = import('./two')
 
 export do
