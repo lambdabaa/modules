@@ -1,3 +1,5 @@
+require 'set'
+
 require_relative './debug'
 
 module Interop
@@ -28,7 +30,7 @@ module Interop
     result
   end
 
-  def self.wrap_constants(new, result={})
+  def self.wrap_constants(new, result={}, visited=Set.new)
     if new.length == 0
       return result
     end
@@ -40,12 +42,18 @@ module Interop
     end
 
     if const.respond_to? :constants
-      # TODO(ari): Handle circular references!
-      children = const.constants.map {|child| "#{str}::#{child.to_s}"}
+      children = const
+        .constants
+        .reject {|element| visited.include?(element)}
+        .map {|child|
+          visited.add(child)
+          "#{str}::#{child.to_s}"
+        }
+
       new += children
     end
 
     result[str] = const.class == Module ? Class.new.extend(const) : const
-    return wrap_constants(new, result)
+    return wrap_constants(new, result, visited)
   end
 end
