@@ -40,7 +40,7 @@ end
 You can run your program through the `modules` command-line interface
 via `modules run <path/to/main.rb>`. This invocation style doesn't
 require your program to load the gem; `main.rb` can use `import` to load
-local modules defined with `export as well as other ruby libraries.
+local modules defined with `export` as well as other ruby libraries.
 
 ### API
 
