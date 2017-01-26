@@ -50,6 +50,11 @@ Declare a module (one per file) that other modules can load by calling `import`
 with a relative filepath. `export` takes a single block parameter whose return
 value is what gets exported from the module.
 
+#### export(key, value)
+
+Declare a single export from a module. This will make it so that your
+module exports a hash with `{key => value}`.
+
 #### import(id)
 
 Load another module. `import` works with local modules declared with `export` as
@@ -72,28 +77,25 @@ import('test/unit/assertions') =>
 ### Example
 
 ```rb
-### foo.rb
-export do
-  # The value you return from the export block is what gets exported
-  # from the module.
-  'foo'
-end
+### consts.rb
+export :foo, 'foo'
+export :bar, 'bar'
 
-### foo_wrapper.rb
-# Load the 'foo' constant from foo.rb
-foo = import './foo'
+### foobar.rb
+# Load the constants from consts.rb
+consts = import './consts'
 
 export do
-  lambda { foo }
+  lambda { consts[:foo] + consts[:bar] }
 end
 
 ### test.rb
 # load local modules defined with an amd-inspired syntax
-foo = import './foo_wrapper'
+foobar = import './foobar'
 # compatible with external globals-style ruby modules
 assert = import('test/unit/assertions')['Test::Unit::Assertions']
 
-assert.assert_equal(foo.call(), 'foo')
+assert.assert_equal(foobar.call(), 'foobar')
 # No global namespace pollution \o/
 assert.assert_equal(defined? Test, nil)
 ```
