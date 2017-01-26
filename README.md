@@ -18,15 +18,29 @@ of js modules. This experiment strives to demonstrate a cleaner modules
 abstraction for Ruby that maintains some interoperability with existing
 practices in the Ruby standard library and community packages.
 
-### Command-line usage
+### Installation
 
-```
-bundle install modules
-modules run <path/to/main.rb>
+`bundle install modules`
+
+### Usage within Ruby
+
+```rb
+require 'modules'
+
+# Now import and export are globally throughout your program.
+two = import('./two')
+
+export do
+  two + two
+end
 ```
 
-In the example above, `main.rb` will be able to import local modules that use
-`export` as well as other ruby libraries.
+### Bootstrapping from the command line
+
+You can run your program through the `modules` command-line interface
+via `modules run <path/to/main.rb>`. This invocation style doesn't
+require your program to load the gem; `main.rb` can use `import` to load
+local modules defined with `export as well as other ruby libraries.
 
 ### API
 
