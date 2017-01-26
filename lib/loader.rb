@@ -19,7 +19,7 @@ module Loader
 
   def self.import(id, type=nil)
     chr = id[0]
-    if type == 'interop' || (type != 'internal' && !['/', '.'].include?(chr))
+    if type == 'interop'
       return Interop.import(id)
     end
 
@@ -32,12 +32,21 @@ module Loader
     end
 
     @path = File.expand_path(raw)
-    if !@cache.include?(@path)
-      id = @path.end_with?('.rb') ? @path : "#{@path}.rb"
-      Kernel.load(id, true)
+    filepath = @path.end_with?('.rb') ? @path : "#{@path}.rb"
+    exists = File.exist?(filepath)
+    if type == 'internal' && !exists
+      raise "Could not resolve local module at #{@path}"
     end
 
-    result = @cache[@path]
+    if exists
+      # Prefer loading local module since we found it.
+      Kernel.load(filepath, true) unless @cache.include?(@path)
+      result = @cache[@path]
+    else
+      # Failover to external load.
+      result = Interop.import(id)
+    end
+
     @path = prev
     result
   end

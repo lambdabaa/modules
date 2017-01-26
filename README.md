@@ -98,6 +98,15 @@ assert.assert_equal(foo.call(), 'foo')
 assert.assert_equal(defined? Test, nil)
 ```
 
+### Resolution algorithm
+
+When `import('bar/baz')` is called from /home/lambdabaa/foo, `modules`
+will build /home/lambdabaa/foo/bar/baz (currently by composing
+`File.expand_path` and `File.join`) and check whether this file exists.
+If it does, `modules` will assume this is a local import. Otherwise,
+it will assume `bar/baz` isn't a locally defined module and will try
+`require('bar/baz')`.
+
 ### Wat?
 
 I'm glad you asked! Under the hood we load code into the modules cache
