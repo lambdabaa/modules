@@ -10,4 +10,8 @@ RSpec.describe Loader do
     reverse = Loader.import('./reverse')
     expect(reverse.call('123')).to eq '321'
   end
+
+  it "missing file error" do
+    expect { Loader.import('./syntax_error') }.to raise_error(LoadError)
+  end
 end
