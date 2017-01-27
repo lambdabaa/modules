@@ -5,5 +5,5 @@ rvm:
   - jruby-19mode
 script:
   - bundle exec rspec --color --pattern test/**/*_test.rb
-  - ./bin/modules run example/main.rb
-  - ruby test/interop_cycles.rb
+  - ./bin/modules run example/modular/main.rb
+  - ruby example/cycles/main.rb

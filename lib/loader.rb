@@ -50,8 +50,8 @@ module Loader
       # Prefer loading local module since we found it.
       begin
         Kernel.load(filepath, true) unless @cache.include?(@path)
-      rescue
-        raise LoadError, "Could not load #{filepath} from #{container}"
+      rescue => e
+        raise LoadError, "Could not load #{filepath} from #{container}: #{e}"
       end
 
       result = @cache[@path]

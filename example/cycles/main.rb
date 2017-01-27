@@ -4,9 +4,10 @@
 # was 'optparse' and rspec loads that package so this test
 # is only useful when run outside of rspec (ie ruby test/interop_cycles.rb).
 
-require_relative '../lib/interop'
+require_relative '../../lib/interop'
 
 # This goes into an infinite loop without cycle detection.
-OptionParser = Interop.import('optparse')['OptionParser']
+options = Interop.import('optparse')['OptionParser']
 assert = Interop.import('test/unit/assertions')['Test::Unit::Assertions']
-assert.assert_equal(OptionParser.class, Class)
+
+assert.assert_equal(options.class, Class)
