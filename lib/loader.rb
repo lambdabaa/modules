@@ -30,7 +30,8 @@ module Loader
 
     prev = @path
     if @path.nil?
-      raw = File.join(@basepath, id)
+      container = @basepath
+      raw = File.join(container, id)
     else
       container = File.dirname(@path)
       raw = File.join(container, id)
@@ -45,7 +46,12 @@ module Loader
 
     if exists
       # Prefer loading local module since we found it.
-      Kernel.load(filepath, true) unless @cache.include?(@path)
+      begin
+        Kernel.load(filepath, true) unless @cache.include?(@path)
+      rescue
+        raise LoadError, "Could not load #{filepath} from #{container}"
+      end
+
       result = @cache[@path]
     else
       # Failover to external load.
