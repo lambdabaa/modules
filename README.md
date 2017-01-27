@@ -30,6 +30,9 @@ require 'modules'
 # Now import and export are available globally throughout your program.
 two = import('./two')
 
+# import also hangs off of the modules global if you prefer
+two = modules.import('./two')
+
 export do
   two + two
 end
@@ -73,6 +76,12 @@ import('test/unit/assertions') =>
   ...
 }
 ```
+
+#### modules.config(options)
+
+Configure the loader with an options hash. Currently supports
+
+`:basepath` - base directory that the loader uses for filepath resolution
 
 ### Example
 
