@@ -27,6 +27,8 @@ standard library and community packages.
 
 ```rb
 require 'modules'
+# Tell modules where it should look for code
+modules.config(basepath: File.dirname(__FILE__))
 
 # Now import and export are available globally throughout your program.
 two = import('./two')
@@ -103,6 +105,10 @@ export do
 end
 
 ### test.rb
+
+require 'modules'
+modules.config(basepath: File.dirname(__FILE__))
+
 # load local modules defined with an amd-inspired syntax
 foobar = import './foobar'
 # compatible with external globals-style ruby modules
