@@ -15,7 +15,9 @@ In contrast, the node.js commonjs module system allows developers
 to explicitly declare exports that consumers can access on
 the loaded module container. Many prefer the explicit and isolated aspects
 of js modules. This module loader defines the primitives `import` and
-`export` necessary to write clean, declarative modules in ruby.
+`export` necessary for a cleaner modules abstraction in Ruby while
+maintaining some interoperability with existing practices in the Ruby
+standard library and community packages.
 
 ### Installation
 
