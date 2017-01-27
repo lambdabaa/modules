@@ -56,7 +56,8 @@ value is what gets exported from the module.
 #### export(key, value)
 
 Declare a single export from a module. This will make it so that your
-module exports a hash with `{key => value}`.
+module exports a hash with `{key => value}`. You can call this multiple times
+in a module.
 
 #### import(id)
 
