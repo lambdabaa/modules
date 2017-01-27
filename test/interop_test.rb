@@ -1,4 +1,4 @@
-require_relative '../lib/interop'
+require_relative '../lib/modules/interop'
 
 RSpec.describe Interop do
   before(:each) do

@@ -2,8 +2,7 @@
 
 require 'optparse'
 
-require_relative '../lib/global'
-require_relative '../lib/modules'
+require_relative '../lib/modules/modules'
 
 def main
   options = {}

@@ -1,24 +1,21 @@
-require_relative './debug'
-require_relative './loader'
+require_relative './modules/loader'
 
-module Modules
-  def self.run(args, opts)
-    if opts.include?('debug')
-      Debug.enable(opts['debug'])
+class Object
+  def export(name=nil, value=nil)
+    if name.nil?
+      value = yield
+    else
+      value = {name => value}
     end
 
-    file = args[0]
-    abs = "#{Dir.pwd}/#{file}"
-    Loader::Api.config(basepath: File.dirname(abs))
-    Loader.import(File.basename(abs), 'internal')
+    Loader.export(value)
   end
 
-  def self.main(cmd, args, opts)
-    case cmd
-    when 'run'
-      run(args, opts)
-    else
-      raise "Invalid command #{cmd}"
-    end
+  def import(id, type=nil)
+    Loader.import(id, type)
+  end
+
+  def modules
+    Loader::Api
   end
 end

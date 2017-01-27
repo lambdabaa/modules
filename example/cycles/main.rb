@@ -4,7 +4,7 @@
 # was 'optparse' and rspec loads that package so this test
 # is only useful when run outside of rspec (ie ruby test/interop_cycles.rb).
 
-require_relative '../../lib/interop'
+require_relative '../../lib/modules/interop'
 
 # This goes into an infinite loop without cycle detection.
 options = Interop.import('optparse')['OptionParser']

@@ -1,4 +1,4 @@
-require_relative '../lib/global'
+require_relative '../lib/modules'
 
 RSpec.describe Loader do
   before(:each) do
