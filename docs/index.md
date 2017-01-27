@@ -1,12 +1,6 @@
-modules
-=======
-
-A Ruby module loader inspired by the semantics of js modules.
-
-[![Gem Version](https://badge.fury.io/rb/modules.svg)](https://badge.fury.io/rb/modules)
-[![Build Status](https://travis-ci.org/lambdabaa/modules.png?branch=master)](https://travis-ci.org/lambdabaa/modules)
-
-### Motivation
+---
+layout: default
+---
 
 One of Ruby's greatest weaknesses is that it lacks a good mechanism
 for named imports and exports. When you `require` a ruby file, its
@@ -15,6 +9,9 @@ In contrast, the node.js commonjs module system allows developers
 to explicitly declare exports that consumers can access on
 the loaded module container. Many prefer the explicit and isolated aspects
 of js modules. This module loader defines the primitives `import` and
+`export` necessary for a cleaner modules abstraction in Ruby while
+maintaining some interoperability with existing practices in the Ruby
+standard library and community packages.
 
 ### Installation
 
