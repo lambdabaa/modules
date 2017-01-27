@@ -1,3 +1,8 @@
+# 01/26/17 v1.0.0
+
++ `modules.config` replaces global `set_basepath` (#9)
++ Better error messages on load fail (#22)
+
 # 01/26/17 v0.2.0
 
 + Observe cli debug flag (#29)
