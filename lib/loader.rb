@@ -23,7 +23,6 @@ module Loader
   end
 
   def self.import(id, type=nil)
-    chr = id[0]
     if type == 'interop'
       return Interop.import(id)
     end
@@ -62,8 +61,25 @@ module Loader
     result
   end
 
-  def self.set_basepath(basepath)
-    DEBUG.call "Set basepath to #{basepath}"
-    @basepath = basepath
+  module Api
+    def self.import(id, type=nil)
+      Loader.import(id, type)
+    end
+
+    def self.export(name=nil, value=nil)
+      if name.nil?
+        value = yield
+      else
+        value = {name => value}
+      end
+
+      Loader.export(value)
+    end
+
+    def self.config(opts)
+      if opts.include?(:basepath)
+        Loader.instance_variable_set :@basepath, opts[:basepath]
+      end
+    end
   end
 end

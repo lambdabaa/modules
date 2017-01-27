@@ -11,7 +11,11 @@ class Object
     Loader.export(value)
   end
 
-  def import(id)
-    Loader.import(id)
+  def import(id, type=nil)
+    Loader.import(id, type)
+  end
+
+  def modules
+    Loader::Api
   end
 end
