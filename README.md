@@ -118,6 +118,21 @@ If it does, `modules` will assume this is a local import. Otherwise,
 it will assume `bar/baz` isn't a locally defined module and will try
 `require('bar/baz')`.
 
+### Performance
+
+One important consideration is whether loading code through `modules`
+incurs any performance penalties compared with other ruby mechanisms
+such as globally available constants, global variables, or instance
+variables on the main object. Preliminary testing suggests that
+modules v1 (essentially caching code loaded via `Kernel#load` in a
+hash by filename) is even faster than these other strategies!
+
+![Performance](https://docs.google.com/spreadsheets/d/1S4XNKCIHZINrhqUN-x0LrSHn-LQ3pnJgzXQAVJISo1k/pubchart?oid=318062447&format=image)
+
+The module loader was able to load 1000 modules in an average of 80ms.
+That's 2x the speed of the next fastest method (global variables) and
+2.5x the speed of the slowest method (ruby native modules / constants).
+
 ### Wat?
 
 I'm glad you asked! Under the hood we load code into the modules cache
