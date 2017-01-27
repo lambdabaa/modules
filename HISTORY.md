@@ -1,3 +1,7 @@
+# 01/27/17 v1.1.0
+
++ Allow disabling interop constants cleanup (b13528)
+
 # 01/26/17 v1.0.0
 
 + `modules.config` replaces global `set_basepath` (#9)
