@@ -1,3 +1,7 @@
+# 01/27/17 v1.1.1
+
++ Fix broken gem bundling
+
 # 01/27/17 v1.1.0
 
 + Allow disabling interop constants cleanup (b13528)
