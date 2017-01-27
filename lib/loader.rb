@@ -13,6 +13,9 @@ module Loader
   # (String) path to the file currently being loaded
   @path = nil
 
+  # (Boolean) whether to purge constants added to global namespace on interop load
+  @save_the_environment = false
+
   def self.export(value)
     if @cache.include?(@path) && value.class == Hash
       # Special handling to enable multiple exports
@@ -24,7 +27,7 @@ module Loader
 
   def self.import(id, type=nil)
     if type == 'interop'
-      return Interop.import(id)
+      return Interop.import(id, save_the_environment: @save_the_environment)
     end
 
     prev = @path
@@ -54,7 +57,7 @@ module Loader
       result = @cache[@path]
     else
       # Failover to external load.
-      result = Interop.import(id)
+      result = Interop.import(id, save_the_environment: @save_the_environment)
     end
 
     @path = prev
@@ -77,8 +80,11 @@ module Loader
     end
 
     def self.config(opts)
-      if opts.include?(:basepath)
-        Loader.instance_variable_set :@basepath, opts[:basepath]
+      [
+        :basepath,
+        :save_the_environment,
+      ].each do |opt|
+        Loader.instance_variable_set("@#{opt}", opts[opt]) if opts.include?(opt)
       end
     end
   end

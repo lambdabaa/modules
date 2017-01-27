@@ -8,7 +8,7 @@ module Interop
   # (Hash) map from module identifier to resolved module
   @cache = {}
 
-  def self.import(id)
+  def self.import(id, opts={})
     if @cache.include?(id)
       DEBUG.call "Cache hit #{id}"
       return @cache[id]
@@ -17,14 +17,16 @@ module Interop
     DEBUG.call "Load #{id}"
     snapshot = Module.constants
     require id
-    cleanly_load(Module.constants - snapshot)
+    cleanly_load(Module.constants - snapshot, opts)
   end
 
-  def self.cleanly_load(targets)
+  def self.cleanly_load(targets, opts)
     DEBUG.call "Package definitions #{targets}"
     result = wrap_constants(targets)
-    result.each_pair do |key, value|
-      Object.send(:remove_const, key.to_sym) unless key.include?('::')
+    if !opts[:save_the_environment]
+      result.each_pair do |key, value|
+        Object.send(:remove_const, key.to_sym) unless key.include?('::')
+      end
     end
 
     result

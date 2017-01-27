@@ -80,7 +80,8 @@ import('test/unit/assertions') =>
 
 Configure the loader with an options hash. Currently supports
 
-`:basepath` - base directory that the loader uses for filepath resolution
+`(String) :basepath` - base directory that the loader uses for filepath resolution
+`(Boolean) :save_the_environment` - whether or not to clean up global constants for interop loading
 
 ### Example
 

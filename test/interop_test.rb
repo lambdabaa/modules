@@ -14,4 +14,10 @@ RSpec.describe Interop do
   it "does not pollute global namespace" do
     expect(defined? Base64).to eq nil
   end
+
+  it "save the environment" do
+    subject = '{"x": 5}'
+    json = Interop.import('json', save_the_environment: true)['JSON']
+    expect(JSON.parse(subject)).to eq json.send(:parse, subject)
+  end
 end
