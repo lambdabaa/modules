@@ -1,0 +1,5 @@
+title: ruby modules
+description: The missing ruby module loader, inspired by the semantics of js modules.
+show_downloads: false
+google_analytics:
+theme:
