@@ -1,3 +1,4 @@
+require_relative './callsite'
 require_relative './debug'
 require_relative './interop'
 
@@ -10,18 +11,19 @@ module Loader
   # (Hash) map from module identifier to resolved module
   @cache = {}
 
-  # (String) path to the file currently being loaded
-  @path = nil
+  # (Boolean) Whether or not import has been called at least once.
+  @import_called = false
 
   # (Boolean) whether to purge constants added to global namespace on interop load
   @save_the_environment = false
 
   def self.export(value)
-    if @cache.include?(@path) && value.class == Hash
+    callsite = Callsite.resolve
+    if @cache.include?(callsite) && value.class == Hash
       # Special handling to enable multiple exports
-      @cache[@path] = @cache[@path].merge(value)
+      @cache[callsite] = @cache[callsite].merge(value)
     else
-      @cache[@path] = value
+      @cache[callsite] = value
     end
   end
 
@@ -30,38 +32,30 @@ module Loader
       return Interop.import(id, save_the_environment: @save_the_environment)
     end
 
-    prev = @path
-    if @path.nil?
-      container = @basepath
-      raw = File.join(container, id)
-    else
-      container = File.dirname(@path)
-      raw = File.join(container, id)
-    end
-
-    @path = File.expand_path(raw)
-    filepath = @path.end_with?('.rb') ? @path : "#{@path}.rb"
+    callsite = Callsite.resolve
+    parent = @import_called ? File.dirname(callsite) : @basepath
+    raw = File.join(parent, id)
+    path = File.expand_path(raw)
+    filepath = path.end_with?('.rb') ? path : "#{path}.rb"
     exists = File.exist?(filepath)
+
     if type == 'internal' && !exists
-      raise "Could not resolve local module at #{@path}"
+      raise "Could not resolve local module at #{path}"
     end
 
     if exists
       # Prefer loading local module since we found it.
       begin
-        Kernel.load(filepath, true) unless @cache.include?(@path)
+        Kernel.load(filepath, true) unless @cache.include?(filepath)
       rescue => e
-        raise LoadError, "Could not load #{filepath} from #{container}: #{e}"
+        raise LoadError, "Could not load #{filepath} from #{parent}: #{e}"
       end
 
-      result = @cache[@path]
-    else
-      # Failover to external load.
-      result = Interop.import(id, save_the_environment: @save_the_environment)
+      return @cache[filepath]
     end
 
-    @path = prev
-    result
+    # Failover to external load.
+    return Interop.import(id, save_the_environment: @save_the_environment)
   end
 
   module Api
