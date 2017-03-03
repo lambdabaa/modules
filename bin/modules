@@ -24,4 +24,6 @@ def main
   Modules.main(ARGV[0], ARGV[1..-1], options)
 end
 
-main()
+if __FILE__ == $0
+  main
+end
