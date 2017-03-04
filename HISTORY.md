@@ -1,3 +1,7 @@
+# 03/03/17 v1.2.0
+
++ Support for clearing cached defn (#20)
+
 # 03/03/17 v1.1.2
 
 + Fix issue with dynamic imports (#33)
