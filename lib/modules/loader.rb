@@ -32,12 +32,7 @@ module Loader
       return Interop.import(id, save_the_environment: @save_the_environment)
     end
 
-    callsite = Callsite.resolve
-    parent = @import_called ? File.dirname(callsite) : @basepath
-    raw = File.join(parent, id)
-    path = File.expand_path(raw)
-    filepath = path.end_with?('.rb') ? path : "#{path}.rb"
-    exists = File.exist?(filepath)
+    filepath, exists, parent = resolve_callsite(id)
 
     if type == 'internal' && !exists
       raise "Could not resolve local module at #{path}"
@@ -58,6 +53,11 @@ module Loader
     return Interop.import(id, save_the_environment: @save_the_environment)
   end
 
+  def self.delete(id)
+    filepath, exists = resolve_callsite(id)
+    @cache.delete(exists ? filepath : id)
+  end
+
   module Api
     def self.import(id, type=nil)
       Loader.import(id, type)
@@ -73,6 +73,10 @@ module Loader
       Loader.export(value)
     end
 
+    def self.delete(id)
+      Loader.delete(id)
+    end
+
     def self.config(opts)
       [
         :basepath,
@@ -81,5 +85,17 @@ module Loader
         Loader.instance_variable_set("@#{opt}", opts[opt]) if opts.include?(opt)
       end
     end
+  end
+
+  private
+
+  def self.resolve_callsite(id)
+    callsite = Callsite.resolve(2)
+    parent = @import_called ? File.dirname(callsite) : @basepath
+    raw = File.join(parent, id)
+    path = File.expand_path(raw)
+    filepath = path.end_with?('.rb') ? path : "#{path}.rb"
+    exists = File.exist?(filepath)
+    [filepath, exists, parent]
   end
 end

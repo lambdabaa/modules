@@ -18,4 +18,11 @@ RSpec.describe Loader do
   it "missing file error" do
     expect { import('./syntax_error') }.to raise_error(LoadError)
   end
+
+  it "#modules.delete" do
+    import('./reverse')
+    expect(Loader.instance_variable_get(:@cache).keys.length).to eq 1
+    modules.delete("#{@basepath}/reverse.rb")
+    expect(Loader.instance_variable_get(:@cache).keys.length).to eq 0
+  end
 end
