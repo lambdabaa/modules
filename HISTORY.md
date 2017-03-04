@@ -1,3 +1,7 @@
+# 03/03/17 v1.2.1
+
++ Interop loading modules should make private instance methods public (#35)
+
 # 03/03/17 v1.2.0
 
 + Support for clearing cached defn (#20)
