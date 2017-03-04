@@ -89,6 +89,10 @@ Configure the loader with an options hash. Currently supports
 
 `(Boolean) :save_the_environment` - whether or not to clean up global constants for interop loading
 
+#### modules.delete(id)
+
+Clear a module previously declared with `export(id)` from the modules internal cache.
+
 ### Example
 
 ```rb
