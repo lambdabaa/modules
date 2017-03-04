@@ -1,3 +1,7 @@
+# 03/03/17 v1.1.2
+
++ Fix issue with dynamic imports (#33)
+
 # 01/27/17 v1.1.1
 
 + Fix broken gem bundling

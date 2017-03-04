@@ -3,8 +3,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name = 'modules'
-  spec.version = '1.1.1'
-  spec.date = '2017-01-27'
+  spec.version = '1.1.2'
+  spec.date = '2017-03-03'
   spec.summary = 'Port of js module loader to ruby'
   spec.description = 'A Ruby module loader inspired by the semantics of js modules'
   spec.executables << 'modules'

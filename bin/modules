@@ -15,7 +15,7 @@ def main
     end
 
     opts.on('-v', '--version') do
-      puts '1.1.0'
+      puts '1.1.2'
       exit
     end
   end
