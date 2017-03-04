@@ -1,5 +1,5 @@
-modules
-=======
+:gem: modules :gem:
+===================
 
 A Ruby module loader inspired by the semantics of js modules.
 
