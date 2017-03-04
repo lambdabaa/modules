@@ -3,7 +3,9 @@ modules
 
 A Ruby module loader inspired by the semantics of js modules.
 
+:gem:
 [![Gem Version](https://badge.fury.io/rb/modules.svg)](https://badge.fury.io/rb/modules)
+:gem:
 [![Build Status](https://travis-ci.org/lambdabaa/modules.png?branch=master)](https://travis-ci.org/lambdabaa/modules)
 
 ### Motivation
