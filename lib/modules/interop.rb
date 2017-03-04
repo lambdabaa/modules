@@ -55,7 +55,13 @@ module Interop
       new += children
     end
 
-    result[str] = const.class == Module ? Class.new.extend(const) : const
+    if const.class == Module
+      const.private_instance_methods.each {|method| const.send(:public, method)}
+      result[str] = Class.new.extend(const)
+    else
+      result[str] = const
+    end
+
     return wrap_constants(new, result, visited)
   end
 end
